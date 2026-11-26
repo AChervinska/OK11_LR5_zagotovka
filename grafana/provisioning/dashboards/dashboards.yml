@@ -1,0 +1,17 @@
+apiVersion: 1
+
+providers:
+  - name: drift-dashboards
+    orgId: 1
+    folder: ""
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: true
+    options:
+      # TODO: вкажіть АБСОЛЮТНИЙ шлях до теки dashboards/ у ВАШІЙ копії
+      # репозиторію (Grafana не розуміє відносні шляхи відносно
+      # робочої директорії проєкту — лише відносно власного working
+      # directory, яка залежить від того, як ви запустили сам Grafana).
+      # Приклад: /home/students/ok11_lr5/grafana/dashboards
+      path: ЗАМІНІТЬ_НА_АБСОЛЮТНИЙ_ШЛЯХ/grafana/dashboards

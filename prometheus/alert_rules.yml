@@ -1,0 +1,11 @@
+groups:
+  - name: drift_alerts
+    rules:
+      - alert: PersistentTextLengthDrift
+        expr: drift_column_is_drifted{column="text_length"} == 1
+        for: 10s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Persistent text_length drift detected"
+          description: "Text length drift has persisted for 10 seconds."

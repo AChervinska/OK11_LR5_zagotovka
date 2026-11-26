@@ -1,0 +1,82 @@
+{
+  "title": "ОК11 ЛР5 — Дрейф даних сервісу /predict",
+  "uid": "ok11-lr5-drift",
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": true,
+  "timezone": "browser",
+  "time": { "from": "now-1h", "to": "now" },
+  "refresh": "5s",
+  "panels": [
+    {
+      "id": 1,
+      "type": "timeseries",
+      "title": "Частка колонок з виявленим дрейфом",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "targets": [
+        {
+          "expr": "drift_columns_share",
+          "legendFormat": "частка дрейфу",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "orange", "value": 0.25 },
+              { "color": "red", "value": 0.5 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "p-value за колонками (крок 4)",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 8 },
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "targets": [
+        {
+          "expr": "drift_column_p_value",
+          "legendFormat": "{{column}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "scaleDistribution": { "type": "log", "log": 10 } }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": "state-timeline",
+      "title": "Дрейф за колонками: так/ні (крок 4)",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 16 },
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "targets": [
+        {
+          "expr": "drift_column_is_drifted",
+          "legendFormat": "{{column}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "немає дрейфу", "color": "green" } } },
+            { "type": "value", "options": { "1": { "text": "дрейф", "color": "red" } } }
+          ]
+        }
+      }
+    }
+  ]
+}
